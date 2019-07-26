@@ -35,10 +35,6 @@ $(document).ready(function(){
         qTitle.text(textTitle)
         qAnswer.text(textCorrectAns);
         qAnswerContainer.append(qAnswer);
-        qAnswerContainer.append(qAnswer);
-        qAnswerContainer.append(qAnswer);
-        qAnswerContainer.append(qAnswer);
-       
         
         
     });
