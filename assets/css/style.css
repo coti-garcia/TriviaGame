@@ -3,11 +3,25 @@ body{
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
-    min-height: 100vh;
+    min-height: 90vh;
     font-family: 'Open Sans', sans-serif;
 }
 
 h1{
     font-family: 'Fascinate', cursive;
+    color: #da070b;
+    font-size: 50px;
+}   
+.main-content{
+    background: rgba(255,255,255,.85);
+    margin-top: 50px;
+    padding: 50px;
 }
-
+.timer {
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 2px;
+    font-size: 25px;
+    color: red;
+    margin: 20px 0;
+}
