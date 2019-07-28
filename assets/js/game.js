@@ -6,9 +6,7 @@ $(document).ready(function(){
         url: "https://opentdb.com/api.php?amount=10&category=11&difficulty=easy&type=multiple",
         method: "GET"
     }).then(function(response){
-
         let qIndex = 0;
-        console.log(response.results)
         // Text Variables
         const textTitle = response.results[qIndex].question;
         const textCorrectAns = response.results[qIndex].correct_answer;
@@ -29,17 +27,17 @@ $(document).ready(function(){
         qContainer.append(qTitle,qAnswerContainer);
         $(".question-container").html(qContainer);
         qTitle.text(textTitle)
-        // loop to add answers to the DOM:
-        // ASK TO JACOB:  Why all the buttons are in one <li>??
+            // loop to add answers to the DOM:
+            // ASK TO JACOB:  Why all the buttons are in one <li>??
         for(var i=0; i<allAnswers.length ; i++){
                 var ansOption = $(`<button class="btn-ans" value="${allAnswers[i]}">${allAnswers[i]}</li>`);
                 $(qAnswer).append(ansOption);
                 $(qAnswerContainer).append(qAnswer);
         }
         
+        // Event Listener Win/Loose
         $(".btn-ans").click(function(){
             let value = $(this).attr("value");
-            //console.log(value);
             if ( value == textCorrectAns){
                  console.log("win!")
             }else{
@@ -47,6 +45,7 @@ $(document).ready(function(){
             }
         });
 
+        //Clock
         
     });
 
