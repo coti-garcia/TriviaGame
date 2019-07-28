@@ -22,6 +22,20 @@ h1{
     font-weight: 700;
     letter-spacing: 2px;
     font-size: 25px;
-    color: red;
+    color: #da070b;
     margin: 20px 0;
+}
+.list-group button{
+    width: 100%;
+}
+
+.list-group button:hover{
+    background: #da070b;
+    color: #fff;
+}
+
+.list-group button:focus{
+    background: #bb0509;
+    color: #fff;
+    box-shadow: none;
 }
