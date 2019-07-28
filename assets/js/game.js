@@ -18,7 +18,7 @@ $(document).ready(function(){
         console.log(textTitle);
         console.log("incorrect:" + incorrectAns);
         console.log("correct:" + textCorrectAns);
-
+        
         // DOM Manipulation
         const qContainer = $("<div class='card'>");
         const qTitle = $('<div class="card-header">');
@@ -26,7 +26,7 @@ $(document).ready(function(){
         const qAnswer = $('<li class="list-group-item">')
         qContainer.append(qTitle,qAnswerContainer);
         $(".question-container").html(qContainer);
-        qTitle.text(textTitle)
+        qTitle.html(textTitle)
             // loop to add answers to the DOM:
             // ASK TO JACOB:  Why all the buttons are in one <li>??
         for(var i=0; i<allAnswers.length ; i++){
@@ -45,8 +45,22 @@ $(document).ready(function(){
             }
         });
 
+
+
         //Clock
+        let count = 30;
+        $("#seconds").html(count);
+
+        function countDown(){
+            count--;
+            $("#seconds").html(count);
+            console.log("hi!");
+        }
+        setTimeout(countDown, 1000);
+
+
         
+
     });
 
 }); //Close line
