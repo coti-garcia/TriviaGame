@@ -3,9 +3,11 @@ $(document).ready(function(){
         url: "https://opentdb.com/api.php?amount=10&category=11&difficulty=easy&type=multiple",
         method: "GET"
     }).then(function(response){ 
-        
+        let wins = 0;
+        let looses = 0;
+        let unanswered = 0;
         // QUESTION API INFORMATION
-        let qIndex = 0;
+        let qIndex = 8;
             let textTitle = response.results[qIndex].question;
             let textCorrectAns = response.results[qIndex].correct_answer;
             let incorrectAns = response.results[qIndex].incorrect_answers; //Array 3 
@@ -16,30 +18,57 @@ $(document).ready(function(){
         const qTitle = $('<div class="card-header">');
         const qAnswerContainer = $('<ul class="list-group list-group-flush">')
         
+        // Add Start Button to DOM
+        $("#start-game").html("<button id='start'>Start Game</button>");
         
-        $("#start-game").html("<button id='begin'>Start Game</button>");
-        
+
+        if( qIndex < 10){
+            
+        }else{
+            clearTimeout(timeoutID);
+            $("#game").empty();
+            $("#game").html("Juego Terminado");
+        }
+
         //Clock
         let count = 00;
+
         function countDown(){
             if(count > 0){
                 count--;
                 $("#seconds").html(count);
-                setTimeout(countDown, 1000);
-            }else{
-                $("#message-display").append("<h3>You lost. Try another one!</h3")
-                setTimeout(emptyContent, 4000);
-                qIndex++;
-                setTimeout(nextQuestion,4001);
-                console.log(qIndex);
+                timeoutID = setTimeout(countDown, 1000);
+                $(".btn-ans").click(function(){
+                    clearTimeout(timeoutID);
+                    console.log("clicked!");
+                    let value = $(this).attr("value");
+                    if( value == textCorrectAns ){
+                        $("#message-display").append("<h3>You Won!</h3");
+                        wins++;
+                        console.log("Looses: " + wins)
+                        // nextQuestion();
+                    }else{
+                        $("#message-display").append("<h3>You lost.</h3");
+                        $("#message-display").append(`<p>The correct answer was: <strong>${textCorrectAns}</strong></p>`);
+                        looses++;
+                        console.log("Looses: " + looses)
+                        // nextQuestion();
+                    }
+                });
+            }else if(count === 0){
+                $("#message-display").append("<h3>Out of time!</h3");
+                $("#message-display").append(`<p>The correct answer was: <strong>${textCorrectAns}</strong></p>`);
+                unanswered++;
+                console.log("unanswered: " + unanswered)
+                nextQuestion();
             }
+            
         }
         
-        // Add Start Button to DOM
-       
 
-        $("#begin").click(function(){
-            nextQuestion();
+        $("#start").click(function(){
+            console.log(qIndex);
+            newQuestion();
         })
         
         
@@ -49,11 +78,13 @@ $(document).ready(function(){
             $(qAnswerContainer).empty();
         }
 
+        // Step 1
         function displayGameContainers(){
             qContainer.append(qTitle,qAnswerContainer);
             $(".question-container").html(qContainer);
         }    
-        
+
+        // Step 2
         function textGame(){
             textTitle = response.results[qIndex].question;
             textCorrectAns = response.results[qIndex].correct_answer;
@@ -70,9 +101,9 @@ $(document).ready(function(){
             }
         }
             
-       
-        function nextQuestion(){
-            count = 20;
+        // Step 3 (step 1 + step 2 + Start clock)
+        function newQuestion(){
+            count = 10;
             $("#seconds").html(count);
             $("#start-game").empty();
             displayGameContainers();
@@ -80,32 +111,35 @@ $(document).ready(function(){
             setTimeout(countDown, 1000);
         }   
         
+
+        //Step 4 Next question after 4 seconds
+        function nextQuestion(){
+            setTimeout(emptyContent, 4000);
+            qIndex++;
+            setTimeout(newQuestion,4001);
+            console.log(qIndex);
+        }
+
+
+
         // Event Listener Win/Loose
-        $(".btn-ans").click(function(){
-            let value = $(this).attr("value");
-            // condition -------------true ----------------------------------------------false
-            value == textCorrectAns ? $("#message-display").append("<h3>You Won!</h3") : $("#message-display").append("<h3>You lost. Try another one!</h3");
-            count = 0;
-            setTimeout(countDown(), 3000);
-        });
+        // $(".btn-ans").click(function(){
+        //     let value = $(this).attr("value");
+        //     if( value == textCorrectAns ){
+        //         $("#message-display").append("<h3>You Won!</h3")
+        //         setTimeout(emptyContent, 4000);
+        //         qIndex++;
+        //         setTimeout(newQuestion,4001);
+        //         console.log(qIndex);
+        //     }else{
+        //         $("#message-display").append("<h3>You lost. Try another one!</h3");
+        //         setTimeout(emptyContent, 4000);
+        //         qIndex++;
+        //         setTimeout(newQuestion,4001);
+        //         console.log(qIndex);
+        //     }
+        // });
 
-
-        // Clock
-        // let count = 30;
-        // $("#seconds").html(count);
-        // function countDown(){
-        //     count--;
-        //     $("#seconds").html(count);
-        // }
-        // setTimeout(countDown, 1000);
-
-
-
-        
-
-
-
-        
 
     }); // Close THEN.
 
