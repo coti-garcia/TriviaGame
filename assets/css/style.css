@@ -73,7 +73,7 @@ footer a:hover{
 }
 
 
-button#start {
+button.big-btn {
     margin-top: 30px;
     padding: 15px 60px;
     text-transform: uppercase;

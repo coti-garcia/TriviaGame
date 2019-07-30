@@ -7,7 +7,7 @@ $(document).ready(function(){
         let looses = 0;
         let unanswered = 0;
         // QUESTION API INFORMATION
-        let qIndex = 8;
+        let qIndex = 0;
             let textTitle = response.results[qIndex].question;
             let textCorrectAns = response.results[qIndex].correct_answer;
             let incorrectAns = response.results[qIndex].incorrect_answers; //Array 3 
@@ -37,9 +37,8 @@ $(document).ready(function(){
                 $("#message-display").append(`<p>The correct answer was: <strong>${textCorrectAns}</strong></p>`);
                 unanswered++;
                 console.log("unanswered: " + unanswered)
-                nextQuestion();
-            }
-            
+                setTimeout(nextQuestion, 4000);
+            }  
         }
         
 
@@ -70,13 +69,11 @@ $(document).ready(function(){
             incorrectAns = response.results[qIndex].incorrect_answers; //Array 3
             incorrectAns.push(textCorrectAns);
             incorrectAns.sort();
-            allAnswers = incorrectAns; //Array 4
-            console.log(textCorrectAns);       
+            allAnswers = incorrectAns; //Array 4   
             qTitle.html(textTitle)
             for(var i=0; i<allAnswers.length ; i++){
                     var ansOption = $(`<li class="list-group-item"><button class="btn btn-ans" value="${allAnswers[i]}">${allAnswers[i]}</button></li>`);
                     $(qAnswerContainer).append(ansOption);
-                    //$(qAnswerContainer).append(qAnswer);
             }
         }
             
@@ -100,13 +97,15 @@ $(document).ready(function(){
                 console.log(qIndex);
             }else{
                 clearTimeout(timeoutID);
-                $("#game").empty();
+                emptyContent();
+                $(".timer").empty();
                 const finalInfo = $("<div class='text-center final-information col-12'>")
                 finalInfo.append('<h3>All done, heres how you did!<h3>');
                 finalInfo.append(`<p>Correct Answers: <strong>${wins}</strong></p>`);
                 finalInfo.append(`<p>Incorrect Answers: <strong>${looses}</strong></p>`);
                 finalInfo.append(`<p>Unanswered: <strong>${unanswered}</strong></p>`);
-                $("#game").html(finalInfo);
+               
+                $("#message-display").html(finalInfo);
             }
         }
 
@@ -116,22 +115,18 @@ $(document).ready(function(){
         
             $(document).on("click", ".btn-ans", function(){
                 clearTimeout(timeoutID);
-                console.log("clicked!");
                 let value = $(this).attr("value");
                 if( value == textCorrectAns ){
                     $("#message-display").append("<h3>You Won!</h3");
                     wins++;
-                    console.log("Looses: " + wins)
                     setTimeout(nextQuestion,4000);
                 }else{
                     $("#message-display").append("<h3>Ups!</h3");
                     $("#message-display").append(`<p>The correct answer was: <strong>${textCorrectAns}</strong></p>`);
                     looses++;
-                    console.log("Looses: " + looses)
                     setTimeout(nextQuestion, 4000);
                 }
             });
-
 
     }); // Close THEN.
 
