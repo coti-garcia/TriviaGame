@@ -7,7 +7,7 @@ $(document).ready(function(){
         let looses = 0;
         let unanswered = 0;
         // QUESTION API INFORMATION
-        let qIndex = 8;
+        let qIndex = 0;
             let textTitle = response.results[qIndex].question;
             let textCorrectAns = response.results[qIndex].correct_answer;
             let incorrectAns = response.results[qIndex].incorrect_answers; //Array 3 
@@ -25,7 +25,7 @@ $(document).ready(function(){
        
 
         //Clock
-        let count = 00;
+        let count;
 
         function countDown(){
             if(count > 0){
@@ -45,7 +45,9 @@ $(document).ready(function(){
 
         $("#start").click(function(){
             console.log(qIndex);
+            $(".timer").html(`<p><small>Time Remaining:</small> <span id="seconds">${count}</span> Seconds</p>`)
             newQuestion();
+            
         })
         
         
@@ -80,7 +82,7 @@ $(document).ready(function(){
             
         // Step 3 (step 1 + step 2 + Start clock)
         function newQuestion(){
-            count = 10;
+            count = 30;
             $("#seconds").html(count);
             $("#start-game").empty();
             displayGameContainers();
@@ -99,7 +101,7 @@ $(document).ready(function(){
             }else{
                 clearTimeout(timeoutID);
                 $("#game").empty();
-                $("#game").html("end");
+                $("#game").append("end");
             }
         }
 
