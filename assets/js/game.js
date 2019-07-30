@@ -22,13 +22,7 @@ $(document).ready(function(){
         $("#start-game").html("<button id='start'>Start Game</button>");
         
 
-        if( qIndex < 10){
-            
-        }else{
-            clearTimeout(timeoutID);
-            $("#game").empty();
-            $("#game").html("Juego Terminado");
-        }
+       
 
         //Clock
         let count = 00;
@@ -38,23 +32,6 @@ $(document).ready(function(){
                 count--;
                 $("#seconds").html(count);
                 timeoutID = setTimeout(countDown, 1000);
-                $(".btn-ans").click(function(){
-                    clearTimeout(timeoutID);
-                    console.log("clicked!");
-                    let value = $(this).attr("value");
-                    if( value == textCorrectAns ){
-                        $("#message-display").append("<h3>You Won!</h3");
-                        wins++;
-                        console.log("Looses: " + wins)
-                        // nextQuestion();
-                    }else{
-                        $("#message-display").append("<h3>You lost.</h3");
-                        $("#message-display").append(`<p>The correct answer was: <strong>${textCorrectAns}</strong></p>`);
-                        looses++;
-                        console.log("Looses: " + looses)
-                        // nextQuestion();
-                    }
-                });
             }else if(count === 0){
                 $("#message-display").append("<h3>Out of time!</h3");
                 $("#message-display").append(`<p>The correct answer was: <strong>${textCorrectAns}</strong></p>`);
@@ -114,31 +91,39 @@ $(document).ready(function(){
 
         //Step 4 Next question after 4 seconds
         function nextQuestion(){
-            setTimeout(emptyContent, 4000);
             qIndex++;
-            setTimeout(newQuestion,4001);
-            console.log(qIndex);
+            if( qIndex < 10){
+                setTimeout(emptyContent, 4000);
+                setTimeout(newQuestion,4001);
+                console.log(qIndex);
+            }else{
+                clearTimeout(timeoutID);
+                $("#game").empty();
+                $("#game").html("end");
+            }
         }
 
 
 
         // Event Listener Win/Loose
-        // $(".btn-ans").click(function(){
-        //     let value = $(this).attr("value");
-        //     if( value == textCorrectAns ){
-        //         $("#message-display").append("<h3>You Won!</h3")
-        //         setTimeout(emptyContent, 4000);
-        //         qIndex++;
-        //         setTimeout(newQuestion,4001);
-        //         console.log(qIndex);
-        //     }else{
-        //         $("#message-display").append("<h3>You lost. Try another one!</h3");
-        //         setTimeout(emptyContent, 4000);
-        //         qIndex++;
-        //         setTimeout(newQuestion,4001);
-        //         console.log(qIndex);
-        //     }
-        // });
+        
+            $(document).on("click", ".btn-ans", function(){
+                clearTimeout(timeoutID);
+                console.log("clicked!");
+                let value = $(this).attr("value");
+                if( value == textCorrectAns ){
+                    $("#message-display").append("<h3>You Won!</h3");
+                    wins++;
+                    console.log("Looses: " + wins)
+                    nextQuestion();
+                }else{
+                    $("#message-display").append("<h3>You lost.</h3");
+                    $("#message-display").append(`<p>The correct answer was: <strong>${textCorrectAns}</strong></p>`);
+                    looses++;
+                    console.log("Looses: " + looses)
+                    nextQuestion();
+                }
+            });
 
 
     }); // Close THEN.
