@@ -19,7 +19,7 @@ $(document).ready(function(){
         const qAnswerContainer = $('<ul class="list-group list-group-flush">')
         
         // Add Start Button to DOM
-        $("#start-game").html("<button id='start'>Start Game</button>");
+        //$("#start-game").html("");
         
 
        
@@ -74,7 +74,7 @@ $(document).ready(function(){
             console.log(textCorrectAns);       
             qTitle.html(textTitle)
             for(var i=0; i<allAnswers.length ; i++){
-                    var ansOption = $(`<li class="list-group-item"><button class="btn-ans" value="${allAnswers[i]}">${allAnswers[i]}</button></li>`);
+                    var ansOption = $(`<li class="list-group-item"><button class="btn btn-ans" value="${allAnswers[i]}">${allAnswers[i]}</button></li>`);
                     $(qAnswerContainer).append(ansOption);
                     //$(qAnswerContainer).append(qAnswer);
             }
