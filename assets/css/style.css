@@ -35,6 +35,7 @@ h1{
 .card-header{
     font-weight: 600;
     color: #333;
+    padding: 20px 25px;
 }
 .list-group button{
     width: 100%;
@@ -70,9 +71,7 @@ footer a{
 footer a:hover{
     color: #fff;
 }
-#start-game p{
-    margin-top: 40px;
-}
+
 
 button#start {
     margin-top: 30px;
@@ -86,10 +85,26 @@ li.list-group-item {
 
 li.list-group-item .btn{
     border-radius:  0;
+    padding: 12px;
 }
 
 #message-display h3{
     color: #da070b;
     margin-top: 30px;
+    font-weight: 700;
+}
+.final-information {
+    margin-top: 30px;
+}
+.final-information h3{
+    margin-bottom: 30px;
+}
+
+.final-information p{
+    text-transform: uppercase;
+    color: #333; 
+}
+
+.final-information strong{
     font-weight: 700;
 }

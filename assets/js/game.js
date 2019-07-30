@@ -7,7 +7,7 @@ $(document).ready(function(){
         let looses = 0;
         let unanswered = 0;
         // QUESTION API INFORMATION
-        let qIndex = 0;
+        let qIndex = 8;
             let textTitle = response.results[qIndex].question;
             let textCorrectAns = response.results[qIndex].correct_answer;
             let incorrectAns = response.results[qIndex].incorrect_answers; //Array 3 
@@ -95,13 +95,18 @@ $(document).ready(function(){
         function nextQuestion(){
             qIndex++;
             if( qIndex < 10){
-                setTimeout(emptyContent, 4000);
-                setTimeout(newQuestion,4001);
+                emptyContent();
+                newQuestion();
                 console.log(qIndex);
             }else{
                 clearTimeout(timeoutID);
                 $("#game").empty();
-                $("#game").append("end");
+                const finalInfo = $("<div class='text-center final-information col-12'>")
+                finalInfo.append('<h3>All done, heres how you did!<h3>');
+                finalInfo.append(`<p>Correct Answers: <strong>${wins}</strong></p>`);
+                finalInfo.append(`<p>Incorrect Answers: <strong>${looses}</strong></p>`);
+                finalInfo.append(`<p>Unanswered: <strong>${unanswered}</strong></p>`);
+                $("#game").html(finalInfo);
             }
         }
 
@@ -117,13 +122,13 @@ $(document).ready(function(){
                     $("#message-display").append("<h3>You Won!</h3");
                     wins++;
                     console.log("Looses: " + wins)
-                    nextQuestion();
+                    setTimeout(nextQuestion,4000);
                 }else{
-                    $("#message-display").append("<h3>You lost.</h3");
+                    $("#message-display").append("<h3>Ups!</h3");
                     $("#message-display").append(`<p>The correct answer was: <strong>${textCorrectAns}</strong></p>`);
                     looses++;
                     console.log("Looses: " + looses)
-                    nextQuestion();
+                    setTimeout(nextQuestion, 4000);
                 }
             });
 
